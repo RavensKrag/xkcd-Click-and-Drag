@@ -48,6 +48,13 @@ class GameWindow < Gosu::Window
 					self.width,self.height, fill,
 					0,self.height, fill
 		
+		# TODO: Draw panel outlines
+		# TODO: Set position of text relative to the panels
+		# TODO: Provide animation facilities
+			# TODO: Implement animation tweening
+			# TODO: Allow movement of panels
+			# TODO: Allow movement of text independent, of panels (relative coords)
+			# TODO: Allow advanced animation capabilities, such as scaling and opacity
 		self.translate 0,0 do
 			@text_boxes[0].draw 51,9,0
 			@text_boxes[1].draw 70,37,0
