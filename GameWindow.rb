@@ -49,17 +49,17 @@ class GameWindow < Gosu::Window
 					0,self.height, fill
 		
 		self.translate 0,0 do
-			@text_boxes[0].draw 0,20,0
-			@text_boxes[1].draw 0,100,0
-			@text_boxes[2].draw 0,200,0
+			@text_boxes[0].draw 51,9,0
+			@text_boxes[1].draw 70,37,0
+			@text_boxes[2].draw 114,174,0
 		end
 		
 		self.translate 0,0 do
-			@text_boxes[3].draw 200,20,0
+			@text_boxes[3].draw 225,7,0
 		end
 		
 		self.translate 0,0 do
-			@text_boxes[4].draw 200,100,0
+			@text_boxes[4].draw 495,172,0
 		end
 	end
 	
