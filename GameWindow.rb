@@ -6,15 +6,12 @@ require 'require_all'
 class GameWindow < Gosu::Window
 	def initialize
 		@target_fps = 60
-		# Window should have a 16:9 aspect ratio
-		super(1280, 720, false, (1.0/@target_fps)*1000)
+		super(740, 470, false, (1.0/@target_fps)*1000) # Same size as the pane of the original comic
 		self.caption = "xkcd: Click and Drag "
 		
-		# Stream resources from XKCD website
+		# Stream resources from xkcd website
 		# This program essentially serves as a viewer for the Click and Drag comment, with
 		# some modifications.
-	end
-	
 	def update
 		
 	end
