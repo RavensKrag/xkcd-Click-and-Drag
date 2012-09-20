@@ -9,13 +9,31 @@ class GameWindow < Gosu::Window
 		super(740, 470, false, (1.0/@target_fps)*1000) # Same size as the pane of the original comic
 		self.caption = "xkcd: Click and Drag "
 		
-		@font = Gosu::Font.new self, "Trebuchet MS", 25
-		
 		# Stream resources from xkcd website
 		# This program essentially serves as a viewer for the Click and Drag comment, with
 		# some modifications.
 		
 		# Recreate the opening panels of the comic, so that they can be animated more throughly
+		# 
+		# TODO:	Either draw these images using the texture coordinates of the original image,
+		# 		or cut up the image beforehand.  Doing it on load is pretty slow.
+		comic = Gosu::Image.new self, "./sprites/click_and_drag.png", false
+		@text_boxes = [
+			Gosu::Image.new(self, comic, false, 51,9, 180-51,33-9),
+			Gosu::Image.new(self, comic, false, 70,37, 198-70,79-37),
+			Gosu::Image.new(self, comic, false, 114,174, 202-115,198-174),
+			
+			Gosu::Image.new(self, comic, false, 225,7, 366-225,49-7), 
+			
+			Gosu::Image.new(self, comic, false, 495,172, 554-495,197-172)
+			
+			# Last bit of text is contained in the first tile of the tilemap
+			#~ Gosu::Image.new(self, comic, false, 225,7, 366-225,49-7)
+		]
+		
+		# TODO: Load the text box from the first tile of tilemap
+		# TODO: Blank out where the text box should be
+		# TODO: Blank out where the balloon holding man should be, so he can be animated
 	end
 	
 	def update
@@ -23,31 +41,26 @@ class GameWindow < Gosu::Window
 	end
 	
 	def draw
+		# Fill screen with white.
+		fill = Gosu::Color::WHITE
+		draw_quad	0,0, fill,
+					self.width,0, fill,
+					self.width,self.height, fill,
+					0,self.height, fill
+		
 		self.translate 0,0 do
-			draw_text "From the stories", 0,0,0
-			draw_text ["I expected the",
-					"world to be sad"], 30,@font.height,0
-			draw_text "and it was", 30, 100,0
-			
-			#~ draw_text do
-				#~ puts "From the stories"
-				#~ puts "I expected the"
-				#~ puts "world to be sad"
-				#~ puts "and it was"
-			#~ end
+			@text_boxes[0].draw 0,20,0
+			@text_boxes[1].draw 0,100,0
+			@text_boxes[2].draw 0,200,0
 		end
-		#~ 
-		#~ self.translate 200,0 do
-			#~ @font.draw "and I expected it / to be wonderful.",0,0,0
-		#~ end
-		#~ 
-		#~ self.translate 400,0 do
-			#~ @font.draw "it was.",0,0,0
-		#~ end
-		#~ 
-		#~ self.translate 50, 200 do
-			#~ @font.draw "I just didn't expect / it to be so BIG",0,0,0
-		#~ end
+		
+		self.translate 0,0 do
+			@text_boxes[3].draw 200,20,0
+		end
+		
+		self.translate 0,0 do
+			@text_boxes[4].draw 200,100,0
+		end
 	end
 	
 	def button_down(id)
@@ -59,22 +72,5 @@ class GameWindow < Gosu::Window
 	
 	def button_up(id)
 		
-	end
-	
-	private
-	
-	# Render text with newlines
-	def draw_text(lines, x=0, y=0, z=0)
-		#~ lines = string.split("\n")
-		if lines.respond_to? :each_with_index
-			self.translate x,y do
-				lines.each_with_index do |l, i|
-					@font.draw l, 0, i*@font.height, z
-				end
-			end
-		else
-			# Drawing only one line
-			@font.draw lines, x, y, z
-		end
 	end
 end
